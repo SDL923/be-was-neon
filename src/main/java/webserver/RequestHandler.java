@@ -33,13 +33,13 @@ public class RequestHandler implements Runnable {
             HttpResponse httpResponse;
 
             // request message의 url에 맞는 manager 클래스 실행
-            if(httpRequest.getStartLineInfo("url").equals("/registration")){
+            if(httpRequest.isUrlRegister()){
                 RegisterManager registerManager = new RegisterManager(httpRequest);
                 httpResponse = registerManager.responseMaker();
-            }else if(httpRequest.getStartLineInfo("url").equals("/login")){
+            }else if(httpRequest.isUrlLogin()){
                 LoginManager loginManager = new LoginManager(httpRequest);
                 httpResponse = loginManager.responseMaker();
-            }else if(httpRequest.getStartLineInfo("url").equals("/logout")){
+            }else if(httpRequest.isUrlLogout()){
                 LogoutManager logoutManager = new LogoutManager(httpRequest);
                 httpResponse = logoutManager.responseMaker();
             }else{
