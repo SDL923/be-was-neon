@@ -60,8 +60,8 @@ public class HttpRequest {
     }
 
     // -------------------------  getter -------------------------
-    public String getStartLineInfo(String startLinekey){
-        return startLineData.get(startLinekey);
+    public String getStartLineInfo(String startLineKey){
+        return startLineData.get(startLineKey);
     }
 
     public String getHeaderInfo(String headerInfoKey){
@@ -79,6 +79,19 @@ public class HttpRequest {
 
     public boolean isContentLengthExist(){ // Content-Length가 존재하고 0보다 큰지 확인
         return headersData.containsKey("Content-Length") && (getContentLength() > 0);
+    }
+
+    // ------------------------- is -------------------------
+    public boolean isUrlRegister(){
+        return startLineData.get("url").equals("/registration");
+    }
+
+    public boolean isUrlLogin(){
+        return startLineData.get("url").equals("/login");
+    }
+
+    public boolean isUrlLogout(){
+        return startLineData.get("url").equals("/logout");
     }
 
 }
