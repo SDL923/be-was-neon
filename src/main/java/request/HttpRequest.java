@@ -115,4 +115,8 @@ public class HttpRequest {
         return startLineData.get("method").equals(METHOD_POST);
     }
 
+    public boolean isCookieExist(){ // header에 cookie가 존재하는지
+        return headersData.containsKey("Cookie");
+    }
+
 }
