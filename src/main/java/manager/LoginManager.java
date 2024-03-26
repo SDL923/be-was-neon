@@ -26,10 +26,10 @@ public class LoginManager {
     }
 
     public HttpResponse responseMaker() throws IOException {
-        if(httpRequest.getStartLineInfo("method").equals("GET")){
+        if(httpRequest.isMethodGet()){
             getResponseSetter();
         }
-        if(httpRequest.getStartLineInfo("method").equals("POST")){
+        if(httpRequest.isMethodPost()){
             postResponseSetter();
         }
         return httpResponse;
