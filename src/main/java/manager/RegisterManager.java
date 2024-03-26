@@ -1,5 +1,7 @@
 package manager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import request.FileInfo;
 import request.HttpRequest;
 import response.ContentType;
@@ -12,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class RegisterManager {
+    private static final Logger logger = LoggerFactory.getLogger(RegisterManager.class);
+
     HttpRequest httpRequest;
     HttpResponse httpResponse;
 
@@ -48,6 +52,7 @@ public class RegisterManager {
 
     private void postResponseSetter() throws IOException { // 회원가입 후 main 페이지로 redirect 하는 response 반환
         storeDatabase(createUser()); // request 정보로 User 객체 생성 후 db에 저장
+        logger.info("회원가입 성공!");
 
         String completePath = FileInfo.makeCompletePath("/index.html");
 
