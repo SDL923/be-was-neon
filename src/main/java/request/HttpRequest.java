@@ -9,6 +9,11 @@ public class HttpRequest {
     private static final String AMPERSAND = "&";
     private static final String EQUAL = "=";
     private static final String COLON_SPACE = ": ";
+    private static final String METHOD_GET = "GET";
+    private static final String METHOD_POST = "POST";
+    private static final String URL_REGISTER = "/registration";
+    private static final String URL_LOGIN = "/login";
+    private static final String URL_LOGOUT = "/logout";
 
     private String startLine;
     private String body;
@@ -83,15 +88,23 @@ public class HttpRequest {
 
     // ------------------------- is -------------------------
     public boolean isUrlRegister(){
-        return startLineData.get("url").equals("/registration");
+        return startLineData.get("url").equals(URL_REGISTER);
     }
 
     public boolean isUrlLogin(){
-        return startLineData.get("url").equals("/login");
+        return startLineData.get("url").equals(URL_LOGIN);
     }
 
     public boolean isUrlLogout(){
-        return startLineData.get("url").equals("/logout");
+        return startLineData.get("url").equals(URL_LOGOUT);
+    }
+
+    public boolean isMethodGet(){
+        return startLineData.get("method").equals(METHOD_GET);
+    }
+
+    public boolean isMethodPost(){
+        return startLineData.get("method").equals(METHOD_POST);
     }
 
 }
