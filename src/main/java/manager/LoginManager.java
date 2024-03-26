@@ -1,8 +1,11 @@
 package manager;
 
 import db.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import request.FileInfo;
 import request.HttpRequest;
+import request.RequestParser;
 import response.ContentType;
 import response.HttpResponse;
 import db.Database;
@@ -12,6 +15,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class LoginManager {
+    private static final Logger logger = LoggerFactory.getLogger(LoginManager.class);
+
     HttpRequest httpRequest;
     HttpResponse httpResponse;
 
@@ -86,11 +91,17 @@ public class LoginManager {
         String inputUserId = httpRequest.getBodyInfo("userId");
         String inputPassword = httpRequest.getBodyInfo("password");
 
-        if(Database.findUserById(inputUserId) == null){ // 해당 userId의 데잍터가 없으면 false
+        if(Database.findUserById(inputUserId) == null){ // 해당 userId의 데이터가 없으면 false
+            logger.error("아이디가 존재하지 않습니다! (input ID: {})", inputUserId);
             return false;
         }
-        String dbUserId = Database.findUserById(inputUserId).getUserId();
-        String dbPassword = Database.findUserById(inputUserId).getPassword();
-        return (inputUserId.equals(dbUserId) && inputPassword.equals(dbPassword));
+        String dbPassword = Database.findUserById(inputUserId).getPassword(); // db에서 id에 맞는 password 가져오기
+        if(!inputPassword.equals(dbPassword)){ // password가 일치하지 않으면
+            logger.error("비밀번호가 일치하지 않습니다! (input ID: {}, input Password: {})", inputUserId, inputPassword);
+            return false;
+        }
+
+        logger.info("로그인 성공! (login ID: {})", inputUserId);
+        return true;
     }
 }
