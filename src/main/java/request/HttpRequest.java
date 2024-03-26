@@ -45,6 +45,14 @@ public class HttpRequest {
         startLineData.put("version", splitStartLine[2]);
     }
 
+    public String parseHeaderCookie(String cookieKey){
+        HashMap<String, String> cookieData = new HashMap<String, String>();
+        for(String token : headersData.get("Cookie").split("[\\s;]+")){ // " "과 ";" 하나이상 반복된 패턴으로 split
+            String[] splitInfo = token.split("="); // 이름과 값을 = 로 분리
+            cookieData.put(splitInfo[0], splitInfo[1]); // 해쉬 맵에 정보 저장
+        }
+        return cookieData.get(cookieKey);
+    }
 
     // ------------------------- request body 데이터 파싱&저장 -------------------------
     public void storeBodyData(String body){
