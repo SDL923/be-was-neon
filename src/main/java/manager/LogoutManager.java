@@ -38,17 +38,8 @@ public class LogoutManager {
     }
 
     private void removeSessionId(){ // 저장되어 있는 session id 삭제
-        Session.deleteSession(parseSidValue());
+        Session.deleteSession(httpRequest.parseHeaderCookie("sid"));
         // 해당 session id가 없을 경우도 생각해야...
     }
 
-    private String parseSidValue(){ // header의 cookie정보에서 sid 값을 추출
-        HashMap<String, String> cookieData = new HashMap<String, String>();
-
-        for(String token : httpRequest.getHeaderInfo("Cookie").split("[\\s;]+")){ // " "과 ";" 하나이상 반복된 패턴으로 split
-            String[] splitInfo = token.split("="); // 이름과 값을 = 로 분리
-            cookieData.put(splitInfo[0], splitInfo[1]); // 해쉬 맵에 정보 저장
-        }
-        return cookieData.get("sid");
-    }
 }
