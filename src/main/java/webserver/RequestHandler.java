@@ -3,10 +3,7 @@ package webserver;
 import java.io.*;
 import java.net.Socket;
 
-import manager.DefaultManager;
-import manager.LoginManager;
-import manager.LogoutManager;
-import manager.RegisterManager;
+import manager.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import request.HttpRequest;
@@ -30,22 +27,12 @@ public class RequestHandler implements Runnable {
 
             HttpRequest httpRequest = RequestParser.readRequestMessage(in);
 
-            HttpResponse httpResponse;
+            HttpResponse httpResponse = new HttpResponse();
 
-            // request message의 url에 맞는 manager 클래스 실행
-            if(httpRequest.isUrlRegister()){
-                RegisterManager registerManager = new RegisterManager(httpRequest);
-                httpResponse = registerManager.responseMaker();
-            }else if(httpRequest.isUrlLogin()){
-                LoginManager loginManager = new LoginManager(httpRequest);
-                httpResponse = loginManager.responseMaker();
-            }else if(httpRequest.isUrlLogout()){
-                LogoutManager logoutManager = new LogoutManager(httpRequest);
-                httpResponse = logoutManager.responseMaker();
-            }else{
-                DefaultManager defaultManager = new DefaultManager(httpRequest);
-                httpResponse = defaultManager.responseMaker();
-            }
+            RequestManager requestManager;
+            requestManager = managerMapper(httpRequest);
+
+            requestManager.responseMaker(httpRequest, httpResponse);
 
             DataOutputStream dos = new DataOutputStream(out);
             ResponseHandler responseHandler = new ResponseHandler(httpResponse);
@@ -57,4 +44,20 @@ public class RequestHandler implements Runnable {
             logger.error(e.getMessage());
         }
     }
+
+    private RequestManager managerMapper(HttpRequest httpRequest) {
+        // request message의 url에 맞는 manager 클래스 맵핑
+        if(httpRequest.isUrlRegister()){
+            return new RegisterManager();
+        }else if(httpRequest.isUrlLogin()){
+            return new LoginManager();
+        }else if(httpRequest.isUrlLogout()){
+            return new LogoutManager();
+        }else if(httpRequest.isUrlUserList()){
+            return new UserListManager();
+        }else{
+            return new DefaultManager();
+        }
+    }
+
 }
