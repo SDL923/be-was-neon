@@ -3,24 +3,17 @@ package manager;
 import db.Session;
 import request.FileInfo;
 import request.HttpRequest;
+import response.ContentType;
 import response.HttpResponse;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 
-public class LogoutManager {
-    HttpRequest httpRequest;
-    HttpResponse httpResponse;
-
-    public LogoutManager(HttpRequest httpRequest){
-        this.httpRequest = httpRequest;
-        httpResponse = new HttpResponse();
-    }
-
-    public HttpResponse responseMaker() throws IOException { // 로그아웃 후 main 페이지로 가는 response 반환
-        removeSessionId(); // 세션 id 삭제
+public class LogoutManager implements RequestManager {
+    @Override
+    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+        removeSessionId(httpRequest.parseHeaderCookie("sid")); // 세션 id 삭제
 
         String completePath = FileInfo.makeCompletePath("/index.html");
 
@@ -33,13 +26,21 @@ public class LogoutManager {
         httpResponse.setLocation("/index.html");
 
         httpResponse.setBody(body);
-
-        return httpResponse;
     }
 
-    private void removeSessionId(){ // 저장되어 있는 session id 삭제
-        Session.deleteSession(httpRequest.parseHeaderCookie("sid"));
+    @Override
+    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+        // bad request
+        byte[] body = "<h1>404 Not Found</h1>".getBytes();
+        httpResponse.setStartLine("404", "Not Found");
+        httpResponse.setContentType(ContentType.getContentType("html"));
+        httpResponse.setContentLength(String.valueOf(body.length));
+
+        httpResponse.setBody(body);
+    }
+
+    private void removeSessionId(String sid){ // 저장되어 있는 session id 삭제
+        Session.deleteSession(sid);
         // 해당 session id가 없을 경우도 생각해야...
     }
-
 }
