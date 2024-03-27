@@ -8,26 +8,14 @@ import request.HttpRequest;
 import response.ContentType;
 import response.HttpResponse;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class UserListManager {
-    HttpRequest httpRequest;
-    HttpResponse httpResponse;
-
-    public UserListManager(HttpRequest httpRequest){
-        this.httpRequest = httpRequest;
-        httpResponse = new HttpResponse();
-    }
-
-    public HttpResponse responseMaker() throws IOException {
-
-        if(checkLoginStatus()){
-//            String completePath = FileInfo.makeCompletePath("/");
-//            String contextType = ContentType.getContentType(FileInfo.getFileType(completePath));
-
+public class UserListManager implements RequestManager {
+    @Override
+    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+        if(checkLoginStatus(httpRequest)){
             byte[] body = makeUserListHtml().getBytes();
 
             httpResponse.setStartLine("200", "OK");
@@ -37,34 +25,38 @@ public class UserListManager {
             httpResponse.setBody(body);
         }else{
             String completePath = FileInfo.makeCompletePath("/login");
-            String contextType = ContentType.getContentType(FileInfo.getFileType(completePath));
 
             File file = new File(completePath);
             FileInputStream fis = new FileInputStream(file);
             byte[] body = fis.readAllBytes();
             fis.close();
 
-            httpResponse.setStartLine("200", "OK");
-            httpResponse.setContentType(contextType);
-            httpResponse.setContentLength(String.valueOf(body.length));
+            httpResponse.setStartLine("302", "FOUND");
+            httpResponse.setLocation("/login");
 
             httpResponse.setBody(body);
-
         }
-
-
-
-        return httpResponse;
     }
 
-    public boolean checkLoginStatus(){
+    @Override
+    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+        // bad request
+        byte[] body = "<h1>404 Not Found</h1>".getBytes();
+        httpResponse.setStartLine("404", "Not Found");
+        httpResponse.setContentType(ContentType.getContentType("html"));
+        httpResponse.setContentLength(String.valueOf(body.length));
+
+        httpResponse.setBody(body);
+    }
+
+    public boolean checkLoginStatus(HttpRequest httpRequest){
         return (httpRequest.isCookieExist() && Session.isSessionExist(httpRequest.parseHeaderCookie("sid")));
     }
 
     public String makeUserListHtml(){
         StringBuilder htmlBuilder = new StringBuilder();
 
-        htmlBuilder.append("<html><head><title>User List</title></head><body>"); // head
+        htmlBuilder.append("<html><head><meta charset=\"UTF-8\" /><title>User List</title></head><body>"); // head
 
         htmlBuilder.append("<table border=\"1\">"); // table 만들기 시작
         htmlBuilder.append("<tr><th>ID</th><th>Password</th><th>Name</th><th>Email</th></tr>"); // table 목록
@@ -83,6 +75,5 @@ public class UserListManager {
 
         return htmlBuilder.toString();
     }
-
 
 }
