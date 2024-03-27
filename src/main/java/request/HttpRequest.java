@@ -14,6 +14,7 @@ public class HttpRequest {
     private static final String URL_REGISTER = "/registration";
     private static final String URL_LOGIN = "/login";
     private static final String URL_LOGOUT = "/logout";
+    private static final String URL_USER_LIST = "/user/list";
 
     private String startLine;
     private String body;
@@ -96,15 +97,19 @@ public class HttpRequest {
 
     // ------------------------- is -------------------------
     public boolean isUrlRegister(){
-        return startLineData.get("url").equals(URL_REGISTER);
+        return startLineData.get("url").startsWith(URL_REGISTER);
     }
 
     public boolean isUrlLogin(){
-        return startLineData.get("url").equals(URL_LOGIN);
+        return startLineData.get("url").startsWith(URL_LOGIN);
     }
 
     public boolean isUrlLogout(){
-        return startLineData.get("url").equals(URL_LOGOUT);
+        return startLineData.get("url").startsWith(URL_LOGOUT);
+    }
+
+    public boolean isUrlUserList(){
+        return startLineData.get("url").startsWith(URL_USER_LIST);
     }
 
     public boolean isMethodGet(){
