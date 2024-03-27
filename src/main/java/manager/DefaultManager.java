@@ -9,16 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class DefaultManager {
-    HttpRequest httpRequest;
-    HttpResponse httpResponse;
-
-    public DefaultManager(HttpRequest httpRequest){
-        this.httpRequest = httpRequest;
-        httpResponse = new HttpResponse();
-    }
-
-    public HttpResponse responseMaker() throws IOException {
+public class DefaultManager implements RequestManager {
+    @Override
+    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         String completePath = FileInfo.makeCompletePath(httpRequest.getStartLineInfo("url"));
         String contextType = ContentType.getContentType(FileInfo.getFileType(completePath));
 
@@ -32,7 +25,17 @@ public class DefaultManager {
         httpResponse.setContentLength(String.valueOf(body.length));
 
         httpResponse.setBody(body);
-
-        return httpResponse;
     }
+
+    @Override
+    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+        // bad request
+        byte[] body = "<h1>404 Not Found</h1>".getBytes();
+        httpResponse.setStartLine("404", "Not Found");
+        httpResponse.setContentType(ContentType.getContentType("html"));
+        httpResponse.setContentLength(String.valueOf(body.length));
+
+        httpResponse.setBody(body);
+    }
+
 }
