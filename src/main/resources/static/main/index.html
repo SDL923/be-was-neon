@@ -16,11 +16,21 @@
             <a class="btn btn_contained btn_size_s" href="/article">글쓰기</a>
           </li>
           <li class="header__menu__item">
-            <form class="form" method="post" action="/logout"> <!--로그아웃 버튼 form 태그 추가-->
+            <form class="form" method="get" action="/logout"> <!--로그아웃 버튼 form 태그 추가-->
               <button id="logout-btn" class="btn btn_ghost btn_size_s " type="submit">
                 로그아웃
               </button>
             </form>
+          </li>
+          <li class="header__menu__item">
+            <form class="form" method="get" action="/user/list">
+              <button class="btn btn_ghost btn_size_s " type="submit">
+                사용자 목록
+              </button>
+            </form>
+          </li>
+          <li class="header__menu__item" style="color:red">
+            <!--사용자 이름-->
           </li>
         </ul>
       </header>
