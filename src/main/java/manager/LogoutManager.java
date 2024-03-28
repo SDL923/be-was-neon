@@ -1,18 +1,15 @@
 package manager;
 
 import db.Session;
-import request.FileInfo;
 import request.HttpRequest;
 import response.ContentType;
 import response.HttpResponse;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class LogoutManager implements RequestManager { // url이 "/logout"일때 처리하는 Manager
     @Override
-    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) {
+    public void manageGet(HttpRequest httpRequest, HttpResponse httpResponse) {
         removeSessionId(httpRequest.parseHeaderCookie("sid")); // 세션 id 삭제
 
         httpResponse.setStartLine("302", "FOUND");
@@ -20,7 +17,7 @@ public class LogoutManager implements RequestManager { // url이 "/logout"일때
     }
 
     @Override
-    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+    public void managePost(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         // bad request
         byte[] body = "<h1>404 Not Found</h1>".getBytes();
         httpResponse.setStartLine("404", "Not Found");

@@ -6,17 +6,17 @@ import response.HttpResponse;
 import java.io.IOException;
 
 public interface RequestManager {
-    default void responseMaker(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+    default void fillResponse(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         if(httpRequest.isMethodGet()){
-            getResponseSetter(httpRequest, httpResponse);
+            manageGet(httpRequest, httpResponse);
         }
         if(httpRequest.isMethodPost()){
-            postResponseSetter(httpRequest, httpResponse);
+            managePost(httpRequest, httpResponse);
         }
     }
 
-    void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException;
+    void manageGet(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException;
 
-    void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException;
+    void managePost(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException;
 
 }
