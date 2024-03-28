@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class MyPageManager implements RequestManager{ // url이 "/myPage"일때 처리하는 Manager
     @Override
     public void manageGet(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
-        if(checkLoginStatus(httpRequest)){
+        if(checkLoginStatus(httpRequest)){ // 로그인 상태이면
             String completePath = FileInfo.makeCompletePath("/myPage");
             File file = new File(completePath);
             FileInputStream fis = new FileInputStream(file);
