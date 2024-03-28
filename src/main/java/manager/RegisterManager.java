@@ -17,7 +17,7 @@ public class RegisterManager implements RequestManager { // url이 "/register"�
     private static final Logger logger = LoggerFactory.getLogger(RegisterManager.class);
 
     @Override
-    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException { // 회원가입 페이지로 이동하는 response 반환
+    public void manageGet(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException { // 회원가입 페이지로 이동하는 response 반환
         String completePath = FileInfo.makeCompletePath(httpRequest.getStartLineInfo("url"));
         String contextType = ContentType.getContentType(FileInfo.getFileType(completePath));
 
@@ -34,7 +34,7 @@ public class RegisterManager implements RequestManager { // url이 "/register"�
     }
 
     @Override
-    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException { // 회원가입 후 main 페이지로 redirect 하는 response 반환
+    public void managePost(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException { // 회원가입 후 main 페이지로 redirect 하는 response 반환
         storeDatabase(createUser(httpRequest)); // request 정보로 User 객체 생성 후 db에 저장
         logger.info("회원가입 성공!");
 

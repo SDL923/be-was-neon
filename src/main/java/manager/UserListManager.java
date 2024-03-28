@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class UserListManager implements RequestManager {
     @Override
-    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+    public void manageGet(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         if(checkLoginStatus(httpRequest)){
             byte[] body = makeUserListHtml().getBytes();
 
@@ -27,7 +27,7 @@ public class UserListManager implements RequestManager {
     }
 
     @Override
-    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+    public void managePost(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         // bad request
         byte[] body = "<h1>404 Not Found</h1>".getBytes();
         httpResponse.setStartLine("404", "Not Found");

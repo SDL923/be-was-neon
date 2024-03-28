@@ -17,7 +17,7 @@ public class LoginManager implements RequestManager { // url이 "/login"일때 �
     private static final Logger logger = LoggerFactory.getLogger(LoginManager.class);
 
     @Override
-    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException { // 로그인 페이지로 이동하는 response 반환
+    public void manageGet(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException { // 로그인 페이지로 이동하는 response 반환
         String completePath = FileInfo.makeCompletePath(httpRequest.getStartLineInfo("url"));
         String contextType = ContentType.getContentType(FileInfo.getFileType(completePath));
 
@@ -34,7 +34,7 @@ public class LoginManager implements RequestManager { // url이 "/login"일때 �
     }
 
     @Override
-    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) { // 로그인 성공/실패로 나누어 동작
+    public void managePost(HttpRequest httpRequest, HttpResponse httpResponse) { // 로그인 성공/실패로 나누어 동작
         if(isLoginSuccess(httpRequest.getBodyInfo("userId"), httpRequest.getBodyInfo("password"))){
             loginSuccessResponse(httpRequest, httpResponse);
         }else{

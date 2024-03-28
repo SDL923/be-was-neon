@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class DefaultManager implements RequestManager { // url이 앞의 모든 경우에 포함되지 않을 때, 디폴트로 처리하는 Manager
     @Override
-    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+    public void manageGet(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         String completePath = FileInfo.makeCompletePath(httpRequest.getStartLineInfo("url"));
         String contextType = ContentType.getContentType(FileInfo.getFileType(completePath));
 
@@ -28,7 +28,7 @@ public class DefaultManager implements RequestManager { // url이 앞의 모든 
     }
 
     @Override
-    public void postResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+    public void managePost(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         // bad request
         byte[] body = "<h1>404 Not Found</h1>".getBytes();
         httpResponse.setStartLine("404", "Not Found");

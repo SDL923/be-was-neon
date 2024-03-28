@@ -32,7 +32,7 @@ public class RequestHandler implements Runnable {
             RequestManager requestManager;
             requestManager = managerMapper(httpRequest);
 
-            requestManager.responseMaker(httpRequest, httpResponse);
+            requestManager.fillResponse(httpRequest, httpResponse);
 
             DataOutputStream dos = new DataOutputStream(out);
             ResponseHandler responseHandler = new ResponseHandler(httpResponse);
