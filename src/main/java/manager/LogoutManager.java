@@ -23,7 +23,7 @@ public class LogoutManager implements RequestManager {
         fis.close();
 
         httpResponse.setStartLine("302", "FOUND");
-        httpResponse.setLocation("/index.html");
+        httpResponse.setLocation("/"); // 기본 index.html 파일로 redirect
 
         httpResponse.setBody(body);
     }
