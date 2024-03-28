@@ -32,6 +32,8 @@ public class ResponseHandler {
     public void writeResponse(DataOutputStream dos) throws IOException {
         dos.writeBytes(getResponseHeader()); // StartLine + Headers
         dos.writeBytes(httpResponse.makeEmptyLine()); // 공백
-        dos.write(httpResponse.getBody(), 0, httpResponse.getBody().length); // Body
+        if(httpResponse.getBody() != null) { // body가 있으면 write
+            dos.write(httpResponse.getBody(), 0, httpResponse.getBody().length); // Body
+        }
     }
 }
