@@ -12,8 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class MyPageManager implements RequestManager{
-
+public class MyPageManager implements RequestManager{ // url이 "/myPage"일때 처리하는 Manager
     @Override
     public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         if(checkLoginStatus(httpRequest)){

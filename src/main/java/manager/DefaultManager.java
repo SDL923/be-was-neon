@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class DefaultManager implements RequestManager {
+public class DefaultManager implements RequestManager { // url이 앞의 모든 경우에 포함되지 않을 때, 디폴트로 처리하는 Manager
     @Override
     public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
         String completePath = FileInfo.makeCompletePath(httpRequest.getStartLineInfo("url"));
