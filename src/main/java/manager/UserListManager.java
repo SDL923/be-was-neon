@@ -3,13 +3,10 @@ package manager;
 import db.Database;
 import db.Session;
 import model.User;
-import request.FileInfo;
 import request.HttpRequest;
 import response.ContentType;
 import response.HttpResponse;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class UserListManager implements RequestManager {
@@ -66,5 +63,4 @@ public class UserListManager implements RequestManager {
 
         return htmlBuilder.toString();
     }
-
 }

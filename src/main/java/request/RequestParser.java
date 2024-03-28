@@ -39,6 +39,7 @@ public class RequestParser {
     private static void readBody(BufferedReader br, HttpRequest httpRequest) throws IOException {
         char[] buffer = new char[httpRequest.getContentLength()];
         br.read(buffer); // context length 만큼 읽기
+        logger.debug("request body : {}", new String(buffer));
         httpRequest.storeBodyData(new String(buffer)); // body 저장
     }
 }

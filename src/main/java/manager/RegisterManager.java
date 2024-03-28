@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class RegisterManager implements RequestManager {
+public class RegisterManager implements RequestManager { // url이 "/register"일때 처리하는 Manager
     private static final Logger logger = LoggerFactory.getLogger(RegisterManager.class);
 
     @Override
@@ -38,17 +38,8 @@ public class RegisterManager implements RequestManager {
         storeDatabase(createUser(httpRequest)); // request 정보로 User 객체 생성 후 db에 저장
         logger.info("회원가입 성공!");
 
-//        String completePath = FileInfo.makeCompletePath("/index.html");
-//
-//        File file = new File(completePath);
-//        FileInputStream fis = new FileInputStream(file);
-//        byte[] body = fis.readAllBytes();
-//        fis.close();
-
         httpResponse.setStartLine("302", "FOUND");
         httpResponse.setLocation("/login"); // 회원가입 하면 login 페이지로 redirect
-
-//        httpResponse.setBody(body);
     }
 
     private User createUser(HttpRequest httpRequest){ // httpRequest 정보를 통해 User객체 생성

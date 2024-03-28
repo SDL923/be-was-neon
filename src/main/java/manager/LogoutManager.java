@@ -10,22 +10,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class LogoutManager implements RequestManager {
+public class LogoutManager implements RequestManager { // url이 "/logout"일때 처리하는 Manager
     @Override
-    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException {
+    public void getResponseSetter(HttpRequest httpRequest, HttpResponse httpResponse) {
         removeSessionId(httpRequest.parseHeaderCookie("sid")); // 세션 id 삭제
-
-        String completePath = FileInfo.makeCompletePath("/index.html");
-
-        File file = new File(completePath);
-        FileInputStream fis = new FileInputStream(file);
-        byte[] body = fis.readAllBytes();
-        fis.close();
 
         httpResponse.setStartLine("302", "FOUND");
         httpResponse.setLocation("/"); // 기본 index.html 파일로 redirect
-
-        httpResponse.setBody(body);
     }
 
     @Override
