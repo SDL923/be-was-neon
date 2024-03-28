@@ -44,35 +44,39 @@ public class LoginManager implements RequestManager {
     }
 
     private void loginSuccessResponse(HttpRequest httpRequest, HttpResponse httpResponse) throws IOException { // 로그인 성공했을 때 response 만들기
-        String completePath = FileInfo.makeCompletePath("/main");
-        File file = new File(completePath);
-        FileInputStream fis = new FileInputStream(file);
-        byte[] body = fis.readAllBytes();
-        fis.close();
+//        String completePath = FileInfo.makeCompletePath("/main");
+//        File file = new File(completePath);
+//        FileInputStream fis = new FileInputStream(file);
+//        byte[] body = fis.readAllBytes();
+//        fis.close();
+//
+//        body = showUserName(body, httpRequest); // name 포함한 html로 수정
+//
+//        httpResponse.setStartLine("200", "OK");
+//        httpResponse.setContentType(ContentType.getContentType(FileInfo.getFileType(completePath)));
+//        httpResponse.setContentLength(String.valueOf(body.length));
+//
+//        String sessionId = Session.storeSession(httpRequest.getBodyInfo("userId")); // session db에 저장
+//        httpResponse.setCookie(sessionId);
+//
+//        httpResponse.setBody(body);
 
-        body = showUserName(body, httpRequest); // name 포함한 html로 수정
+        httpResponse.setStartLine("302", "FOUND");
+        httpResponse.setLocation("/myPage");
 
-        httpResponse.setStartLine("200", "OK");
-        httpResponse.setContentType(ContentType.getContentType(FileInfo.getFileType(completePath)));
-        httpResponse.setContentLength(String.valueOf(body.length));
-
-        String sessionId = Session.storeSession(httpRequest.getBodyInfo("userId")); // session db에 저장
-        httpResponse.setCookie(sessionId);
-
-        httpResponse.setBody(body);
+        String sessionId = Session.storeSession(httpRequest.getBodyInfo("userId")); // sid 생성 후 session db에 저장
+        httpResponse.setCookie(sessionId); // cookie 설정
     }
 
     private void loginFailResponse(HttpResponse httpResponse) throws IOException { // 로그인 실패했을 때 response 만들기
-        String completePath = FileInfo.makeCompletePath("/login/fail");
-        File file = new File(completePath);
-        FileInputStream fis = new FileInputStream(file);
-        byte[] body = fis.readAllBytes();
-        fis.close();
+//        String completePath = FileInfo.makeCompletePath("/login/fail");
+//        File file = new File(completePath);
+//        FileInputStream fis = new FileInputStream(file);
+//        byte[] body = fis.readAllBytes();
+//        fis.close();
 
         httpResponse.setStartLine("302", "FOUND");
-        httpResponse.setLocation("/login/fail/index.html");
-
-        httpResponse.setBody(body);
+        httpResponse.setLocation("/login/fail");
     }
 
     private boolean isLoginSuccess(String inputUserId, String inputPassword){ // 로그인 성공 또는 실패 확인
@@ -88,11 +92,6 @@ public class LoginManager implements RequestManager {
 
         logger.info("로그인 성공! (login ID: {})", inputUserId);
         return true;
-    }
-
-    private byte[] showUserName(byte[] body, HttpRequest httpRequest){ // 로그인 되어있을 때 user name 표시
-        String name = Database.findUserById(httpRequest.getBodyInfo("userId")).getName();
-        return new String(body, StandardCharsets.UTF_8).replace("<!--사용자 이름-->", name).getBytes(); // 사용자 name으로 대체하기
     }
 
 }

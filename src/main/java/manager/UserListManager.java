@@ -24,17 +24,8 @@ public class UserListManager implements RequestManager {
 
             httpResponse.setBody(body);
         }else{
-            String completePath = FileInfo.makeCompletePath("/login");
-
-            File file = new File(completePath);
-            FileInputStream fis = new FileInputStream(file);
-            byte[] body = fis.readAllBytes();
-            fis.close();
-
             httpResponse.setStartLine("302", "FOUND");
-            httpResponse.setLocation("/login");
-
-            httpResponse.setBody(body);
+            httpResponse.setLocation("/login"); // 로그인 상태가 아니면 로그인 화면으로 redirect
         }
     }
 
@@ -49,7 +40,7 @@ public class UserListManager implements RequestManager {
         httpResponse.setBody(body);
     }
 
-    public boolean checkLoginStatus(HttpRequest httpRequest){
+    public boolean checkLoginStatus(HttpRequest httpRequest){ // 현재 request의 cookie가 유효한 sid를 가지고있는지 확인
         return (httpRequest.isCookieExist() && Session.isSessionExist(httpRequest.parseHeaderCookie("sid")));
     }
 

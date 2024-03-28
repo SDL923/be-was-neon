@@ -38,17 +38,17 @@ public class RegisterManager implements RequestManager {
         storeDatabase(createUser(httpRequest)); // request 정보로 User 객체 생성 후 db에 저장
         logger.info("회원가입 성공!");
 
-        String completePath = FileInfo.makeCompletePath("/index.html");
-
-        File file = new File(completePath);
-        FileInputStream fis = new FileInputStream(file);
-        byte[] body = fis.readAllBytes();
-        fis.close();
+//        String completePath = FileInfo.makeCompletePath("/index.html");
+//
+//        File file = new File(completePath);
+//        FileInputStream fis = new FileInputStream(file);
+//        byte[] body = fis.readAllBytes();
+//        fis.close();
 
         httpResponse.setStartLine("302", "FOUND");
-        httpResponse.setLocation("/index.html");
+        httpResponse.setLocation("/login"); // 회원가입 하면 login 페이지로 redirect
 
-        httpResponse.setBody(body);
+//        httpResponse.setBody(body);
     }
 
     private User createUser(HttpRequest httpRequest){ // httpRequest 정보를 통해 User객체 생성
