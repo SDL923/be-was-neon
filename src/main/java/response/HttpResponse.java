@@ -8,6 +8,7 @@ public class HttpResponse {
     private static final String ESCAPE_SEQUENCE = "\r\n";
     private static final String SPACE = " ";
     private static final String SEMI_COLON = ";";
+    private static final String COOKIE_MAX_AGE = "60"; // 1분
 
     private String statusCode;
     private String statusMessage;
@@ -35,7 +36,7 @@ public class HttpResponse {
     }
 
     public String makeCookie() {
-        return ("Set-Cookie:" + SPACE + "sid=" + headersData.get("Set-Cookie") + SEMI_COLON + SPACE + "Path=/" + ESCAPE_SEQUENCE);
+        return ("Set-Cookie:" + SPACE + "sid=" + headersData.get("Set-Cookie") + SEMI_COLON + SPACE + "Path=/" + SEMI_COLON + SPACE + "Max-Age=" + COOKIE_MAX_AGE + ESCAPE_SEQUENCE);
     }
 
     public String makeEmptyLine(){
