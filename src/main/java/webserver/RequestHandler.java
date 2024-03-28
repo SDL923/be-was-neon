@@ -55,6 +55,8 @@ public class RequestHandler implements Runnable {
             return new LogoutManager();
         }else if(httpRequest.isUrlUserList()){
             return new UserListManager();
+        }else if(httpRequest.isUrlMyPage()){
+            return new MyPageManager();
         }else{
             return new DefaultManager();
         }
