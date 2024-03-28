@@ -15,6 +15,7 @@ public class HttpRequest {
     private static final String URL_LOGIN = "/login";
     private static final String URL_LOGOUT = "/logout";
     private static final String URL_USER_LIST = "/user/list";
+    private static final String URL_MY_PAGE = "/myPage";
 
     private String startLine;
     private String body;
@@ -110,6 +111,10 @@ public class HttpRequest {
 
     public boolean isUrlUserList(){
         return startLineData.get("url").startsWith(URL_USER_LIST);
+    }
+
+    public boolean isUrlMyPage(){
+        return startLineData.get("url").startsWith(URL_MY_PAGE);
     }
 
     public boolean isMethodGet(){
