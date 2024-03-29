@@ -42,7 +42,8 @@ public class RegisterManager implements RequestManager { // url이 "/register"�
         httpResponse.setLocation("/login"); // 회원가입 하면 login 페이지로 redirect
     }
 
-    private User createUser(HttpRequest httpRequest){ // httpRequest 정보를 통해 User객체 생성
+    // test 때문에 public
+    public User createUser(HttpRequest httpRequest){ // httpRequest 정보를 통해 User객체 생성
         return new User(
                 httpRequest.getBodyInfo("userId"),
                 httpRequest.getBodyInfo("password"),
@@ -50,7 +51,8 @@ public class RegisterManager implements RequestManager { // url이 "/register"�
                 httpRequest.getBodyInfo("email"));
     }
 
-    private void storeDatabase(User user){ // User 객체를 db에 저장
+    // test 때문에 public
+    public void storeDatabase(User user){ // User 객체를 db에 저장
         Database.addUser(user);
     }
 }
