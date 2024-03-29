@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserListManagerTest {
 
     @Test
-    @DisplayName("파싱한 회원가입 정보를 user 객체에 담은 후 DB에 저장해야 한다.")
+    @DisplayName("DB에 있는 user 정보를 읽어서 user list html을 만들어야 한다.")
     void makeUserListHtmlTest() {
         // test 할 user 생성 후 db에 저장
         User user1 = new User("daniel", "1234", "Daniel", "923daniel@naver.com");
