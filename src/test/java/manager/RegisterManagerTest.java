@@ -19,8 +19,8 @@ public class RegisterManagerTest {
     }
 
     @Test
-    @DisplayName("static 폴더에 있는 파일의 경로를 반환해야 한다.")
-    void manageGetTest() {
+    @DisplayName("파싱한 회원가입 정보를 user 객체에 담은 후 DB에 저장해야 한다.")
+    void storeUserAtDb() {
         httpRequest.storeStartLineData("POST /user/create HTTP/1.1");
         httpRequest.storeHeadersData("Content-Length: 59"); // headers 중에 필요한 정보만 전달
         httpRequest.storeBodyData("userId=javajigi&password=password&name=%EB%B0%95%EC%9E%AC%EC%84%B1&email=javajigi%40slipp.net");
