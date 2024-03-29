@@ -55,7 +55,8 @@ public class LoginManager implements RequestManager { // url이 "/login"일때 �
         httpResponse.setLocation("/login/fail");
     }
 
-    private boolean isLoginSuccess(String inputUserId, String inputPassword){ // 로그인 성공 또는 실패 확인
+    // test 때문에 public
+    public boolean isLoginSuccess(String inputUserId, String inputPassword){ // 로그인 성공 또는 실패 확인
         if(Database.findUserById(inputUserId) == null){ // 해당 userId의 데이터가 없으면 false
             logger.error("아이디가 존재하지 않습니다! (input ID: {})", inputUserId);
             return false;
