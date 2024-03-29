@@ -37,10 +37,11 @@ public class UserListManager implements RequestManager {
         httpResponse.setBody(body);
     }
 
-    public boolean checkLoginStatus(HttpRequest httpRequest){ // 현재 request의 cookie가 유효한 sid를 가지고있는지 확인
+    private boolean checkLoginStatus(HttpRequest httpRequest){ // 현재 request의 cookie가 유효한 sid를 가지고있는지 확인
         return (httpRequest.isCookieExist() && Session.isSessionExist(httpRequest.parseHeaderCookie("sid")));
     }
 
+    // test 때문에 public
     public String makeUserListHtml(){
         StringBuilder htmlBuilder = new StringBuilder();
 
