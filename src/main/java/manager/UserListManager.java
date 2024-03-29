@@ -47,7 +47,14 @@ public class UserListManager implements RequestManager {
 
         htmlBuilder.append("<html><head><meta charset=\"UTF-8\" /><title>User List</title></head><body>"); // head
 
-        htmlBuilder.append("<table border=\"1\">"); // table 만들기 시작
+        // CSS 스타일 추가
+        htmlBuilder.append("<style>");
+        htmlBuilder.append("table {margin: 0 auto; margin-top: 100px}"); // 테이블 가운데 정렬, 위에서 100px 만큼 띄기
+        htmlBuilder.append("</style>");
+        htmlBuilder.append("</head><body>");
+
+        // table 만들기 시작
+        htmlBuilder.append("<table border=\"1\">");
         htmlBuilder.append("<tr><th>ID</th><th>Password</th><th>Name</th><th>Email</th></tr>"); // table 목록
 
         for (User user : Database.findAll()) { // Database의 모든 User 정보 하나씩 가져와 table에 채워가기
